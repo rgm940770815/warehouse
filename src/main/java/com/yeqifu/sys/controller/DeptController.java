@@ -157,7 +157,7 @@ public class DeptController {
             return ResultObj.DELETE_SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
-            return ResultObj.DELETE_ERROR;
+            return ResultObj.errorMsg(e.getMessage());
         }
     }
 

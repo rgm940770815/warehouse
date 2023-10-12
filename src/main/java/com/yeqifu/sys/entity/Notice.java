@@ -38,5 +38,7 @@ public class Notice implements Serializable {
 
     private String opername;
 
+    private Integer available;
+
 
 }

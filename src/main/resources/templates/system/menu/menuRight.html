@@ -315,7 +315,7 @@
                 if (resoult.value){
                     layer.msg("当前菜单节点有子菜单，请选择删除子菜单！")
                 }else {
-                    layer.confirm('你确定要删除【' + data.title + '】这个菜单吗？', {icon: 3, title: '提示'}, function (index) {
+                    layer.confirm('您确定要删除【' + data.title + '】这个菜单吗？', {icon: 3, title: '提示'}, function (index) {
                         $.post("/menu/deleteMenu", {id: data.id},function (res) {
                             if (res.code == 200) {
                                 tableIns.reload({

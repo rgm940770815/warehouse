@@ -464,7 +464,7 @@
 
         //删除
         function deleteInport(data) {
-            layer.confirm('你确定要删除这条进货信息吗？', {icon: 3, title: '提示'}, function (index) {
+            layer.confirm('您确定要删除这条进货信息吗？', {icon: 3, title: '提示'}, function (index) {
                 $.post("/inport/deleteInport", {id: data.id},function (res) {
                     if (res.code == 200) {
                         tableIns.reload({

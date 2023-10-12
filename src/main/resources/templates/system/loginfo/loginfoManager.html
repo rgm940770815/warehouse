@@ -161,7 +161,7 @@
 
         //删除
         function deleteInfo(data) {
-            layer.confirm('你确定要删除这条数据吗？',{icon: 3,title:'提示'},function (index) {
+            layer.confirm('您确定要删除这条数据吗？',{icon: 3,title:'提示'},function (index) {
                 $.post("/loginfo/deleteLoginfo",{id:data.id},function (res) {
                     if (res.code==200){
                         tableIns.reload({
@@ -180,7 +180,7 @@
             var checkStatus = table.checkStatus('loginfoTable');
             var dataLength = checkStatus.data.length;
             if (dataLength>0){
-                layer.confirm('你确定要删除这些数据吗？',{icon: 3,title: '提示'},function (index) {
+                layer.confirm('您确定要删除这些数据吗？',{icon: 3,title: '提示'},function (index) {
                     //获取选中行数据
                     var data = checkStatus.data;
                     var ids = "";

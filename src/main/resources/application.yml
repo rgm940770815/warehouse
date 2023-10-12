@@ -3,9 +3,9 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/mysqld?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC&useSSL=false
-      username: mysqld
-      password: mysqld111
+      url: jdbc:mysql://129.150.45.251:3306/warehouse?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC&useSSL=false
+      username: root
+      password: majm
       max-active: 20
       max-wait: 5000
       initial-size: 1

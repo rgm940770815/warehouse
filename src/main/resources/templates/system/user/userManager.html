@@ -412,7 +412,7 @@
 
         //删除
         function deleteUser(data) {
-            layer.confirm('你确定要删除【' + data.name + '】这个用户吗？', {icon: 3, title: '提示'}, function (index) {
+            layer.confirm('您确定要删除【' + data.name + '】这个用户吗？', {icon: 3, title: '提示'}, function (index) {
                 //查询该用户是否是其他用户的直属领导，如果是，提示删除失败
                 $.get("/user/queryMgrByUserId", {userId: data.id}, function (res) {
                     if (res.code==-1){
@@ -434,7 +434,7 @@
 
         //重置密码
         function resetPwd(data) {
-            layer.confirm('你确定要重置【' + data.name + '】这个用户的密码吗？', {icon: 3, title: '提示'}, function (index) {
+            layer.confirm('您确定要重置【' + data.name + '】这个用户的密码吗？', {icon: 3, title: '提示'}, function (index) {
                 $.post("/user/resetPwd/"+data.id, function (res) {
                     layer.msg(res.msg);
                 });
