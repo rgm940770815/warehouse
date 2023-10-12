@@ -90,7 +90,7 @@
 
         //清除所有缓存
         function removeAllCache() {
-            layer.confirm('你确定要清空所有缓存数据吗？',{icon: 3,title:'提示'},function (index) {
+            layer.confirm('您确定要清空所有缓存数据吗？',{icon: 3,title:'提示'},function (index) {
                 $.post("/cache/removeAllCache",function (res) {
                     if (res.code==200){
                         tableIns.reload();
@@ -102,7 +102,7 @@
 
         //同步缓存
         function syncCache() {
-            layer.confirm('你确定要同步缓存数据吗？',{icon: 3,title:'提示'},function (index) {
+            layer.confirm('您确定要同步缓存数据吗？',{icon: 3,title:'提示'},function (index) {
                 $.post("/cache/syncCache",function (res) {
                     if (res.code==200){
                         tableIns.reload();
@@ -114,7 +114,7 @@
 
         //删除
         function deleteCache(data) {
-            layer.confirm('你确定要删除【'+data.key+'】这条缓存吗？',{icon: 3,title:'提示'},function (index) {
+            layer.confirm('您确定要删除【'+data.key+'】这条缓存吗？',{icon: 3,title:'提示'},function (index) {
                 $.post("/cache/deleteCache",{key:data.key},function (res) {
                     if (res.code==200){
                         tableIns.reload({

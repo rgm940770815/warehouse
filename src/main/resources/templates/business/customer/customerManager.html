@@ -307,7 +307,7 @@
 
         //删除
         function deleteCustomer(data) {
-            layer.confirm('你确定要删除【' + data.customername + '】这个客户吗？', {icon: 3, title: '提示'}, function (index) {
+            prudentDialog('删除该客户，其客户的销售记录将会同步删除！您确定要删除【' + data.customername + '】这个客户吗？',function (index) {
                 $.post("/customer/deleteCustomer", {id: data.id},function (res) {
                     if (res.code == 200) {
                         tableIns.reload({
@@ -317,7 +317,18 @@
                     layer.msg(res.msg);
                 });
                 layer.close(index);
-            });
+            })
+            // layer.confirm('删除客户会同步删除该客户的所有销售记录！你确定要删除【' + data.customername + '】这个客户吗？', {icon: 0, title: '谨慎操作！', shade: [0.8, '#DC143C'],}, function (index) {
+            //     $.post("/customer/deleteCustomer", {id: data.id},function (res) {
+            //         if (res.code == 200) {
+            //             tableIns.reload({
+            //                 where:"",
+            //             });
+            //         }
+            //         layer.msg(res.msg);
+            //     });
+            //     layer.close(index);
+            // });
         }
 
 

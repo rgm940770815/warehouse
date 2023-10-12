@@ -113,6 +113,9 @@
 <div>
     <table class="layui-hide" id="outportTable" lay-filter="outportTable"></table>
     <div id="outportRowBar" style="display: none;">
+        <button type="button" lay-event="revocation" shiro:hasPermission="outport:revocation" class="layui-btn layui-btn-sm layui-btn-danger layui-btn-radius"><i
+                class="layui-icon layui-icon-return"></i>撤回
+        </button>
         <button type="button" lay-event="delete" shiro:hasPermission="outport:delete" class="layui-btn layui-btn-sm layui-btn-danger layui-btn-radius"><i
                 class="layui-icon layui-icon-delete"></i>删除
         </button>
@@ -196,6 +199,9 @@
                 case 'delete':
                     deleteOutport(data);
                     break;
+                case 'revocation':
+                    revocationOutport(data);
+                    break;
             };
         });
 
@@ -226,7 +232,21 @@
 
         //删除退货信息
         function deleteOutport(data) {
-            layer.confirm('你确定要删除这条退货信息吗？', {icon: 3, title: '提示'}, function (index) {
+            layer.confirm('您确定要删除这条退货信息吗？', {icon: 3, title: '提示'}, function (index) {
+                $.post("/outport/deleteOutport", {id: data.id},function (res) {
+                    if (res.code == 200) {
+                        tableIns.reload({
+                            where:"",
+                        });
+                    }
+                    layer.msg(res.msg);
+                });
+                layer.close(index);
+            });
+        }
+        //撤回退货信息
+        function deleteOutport(data) {
+            layer.confirm('您确定要撤回这条退货信息吗？', {icon: 3, title: '提示'}, function (index) {
                 $.post("/outport/deleteOutport", {id: data.id},function (res) {
                     if (res.code == 200) {
                         tableIns.reload({
