@@ -93,7 +93,7 @@ public class CustomerController {
      */
     @ApiOperation(value = "删除一个客户",notes = "删除一个客户")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "客户ID",required = true,paramType = "query",dataType = "Integer")})
-    @RequestMapping(value = "deleteCustomer",method = RequestMethod.DELETE)
+    @RequestMapping(value = "deleteCustomer")
     public ResultObj deleteCustomer(Integer id){
         try {
             customerService.deleteCustomerById(id);
