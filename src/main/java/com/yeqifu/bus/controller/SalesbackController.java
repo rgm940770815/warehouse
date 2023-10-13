@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yeqifu.bus.entity.Customer;
 import com.yeqifu.bus.entity.Goods;
 import com.yeqifu.bus.entity.Salesback;
+import com.yeqifu.bus.exception.CustomException;
 import com.yeqifu.bus.service.ICustomerService;
 import com.yeqifu.bus.service.IGoodsService;
 import com.yeqifu.bus.service.ISalesbackService;
@@ -14,6 +15,7 @@ import com.yeqifu.bus.vo.SalesbackVo;
 import com.yeqifu.sys.common.DataGridView;
 import com.yeqifu.sys.common.ResultObj;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -111,6 +113,23 @@ public class SalesbackController {
             return ResultObj.DELETE_ERROR;
         }
     }
-    
+
+    /**
+     * 销售退货信息撤回
+     * @param id 销售退货单ID
+     * @return
+     */
+    @GetMapping("revocationSalesback")
+    public ResultObj revocationSalesback(Integer id){
+        try {
+            salesbackService.revocationByid(id);
+            return ResultObj.REVOCATION_SUCCESS;
+        }catch (CustomException e){
+            return ResultObj.errorMsg(e.getMessage());
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultObj.REVOCATION_ERROR;
+        }
+    }
 }
 

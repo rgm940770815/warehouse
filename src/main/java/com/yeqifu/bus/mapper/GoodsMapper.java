@@ -57,4 +57,11 @@ public interface GoodsMapper extends BaseMapper<Goods> {
      * 加载所有库存预警商品
      */
     List<Goods> loadAllWarning();
+
+    /**
+     * 根据商品ID累加商品库存（一般在商品退货时使用）
+     * @param goodsid 商品ID
+     * @param number 需要累加的数量(负数代表减库存)
+     */
+    void updateNumberByid(@Param("goodsid") Integer goodsid, @Param("number") Integer number);
 }

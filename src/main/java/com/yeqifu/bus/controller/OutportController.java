@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yeqifu.bus.entity.Goods;
 import com.yeqifu.bus.entity.Outport;
 import com.yeqifu.bus.entity.Provider;
+import com.yeqifu.bus.exception.CustomException;
 import com.yeqifu.bus.service.IGoodsService;
 import com.yeqifu.bus.service.IOutportService;
 import com.yeqifu.bus.service.IProviderService;
@@ -14,6 +15,7 @@ import com.yeqifu.bus.vo.OutportVo;
 import com.yeqifu.sys.common.DataGridView;
 import com.yeqifu.sys.common.ResultObj;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +54,8 @@ public class OutportController {
         try {
             outportService.addOutport(id,number,remark);
             return ResultObj.BACKINPORT_SUCCESS;
+        } catch(CustomException e){
+            return ResultObj.errorMsg(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return ResultObj.BACKINPORT_ERROR;
@@ -109,6 +113,22 @@ public class OutportController {
             e.printStackTrace();
             return ResultObj.DELETE_ERROR;
         }
+    }
+
+    /**
+     * 撤回退货信息
+     * @param id
+     * @return
+     */
+    @GetMapping("revocationOutport")
+    public ResultObj revocationOutport(Integer id){
+       try{
+            outportService.revocationByid(id);
+           return ResultObj.REVOCATION_SUCCESS;
+       }catch (Exception e){
+           e.printStackTrace();
+           return ResultObj.REVOCATION_ERROR;
+       }
     }
 
 

@@ -21,4 +21,9 @@ public interface ISalesbackService extends IService<Salesback> {
      */
     void addSalesback(Integer id, Integer number, String remark);
 
+    /**
+     * 撤回销售退货信息操作
+     * @param id 退货单ID
+     */
+    void revocationByid(Integer id);
 }

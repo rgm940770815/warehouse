@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yeqifu.bus.entity.Customer;
 import com.yeqifu.bus.entity.Goods;
 import com.yeqifu.bus.entity.Sales;
+import com.yeqifu.bus.exception.CustomException;
 import com.yeqifu.bus.service.ICustomerService;
 import com.yeqifu.bus.service.IGoodsService;
 import com.yeqifu.bus.service.ISalesService;
@@ -15,6 +16,7 @@ import com.yeqifu.sys.common.DataGridView;
 import com.yeqifu.sys.common.ResultObj;
 import com.yeqifu.sys.common.WebUtils;
 import com.yeqifu.sys.entity.User;
+import com.yeqifu.sys.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +44,9 @@ public class SalesController {
 
     @Autowired
     private IGoodsService goodsService;
+
+    @Autowired
+    private IUserService userService;
 
     /**
      * 查询所有商品销售信息
@@ -75,6 +80,13 @@ public class SalesController {
                 //设置商品规格
                 sales.setSize(goods.getSize());
             }
+            //设置销售员名称
+            User user = userService.getById(sales.getUserid());
+            if(null!=user){
+                //设置销售员名称
+                sales.setSalesmanname(user.getName());
+            }
+
         }
         return new DataGridView(page1.getTotal(),page1.getRecords());
     }
@@ -93,8 +105,15 @@ public class SalesController {
             salesVo.setOperateperson(user.getName());
             //设置销售时间
             salesVo.setSalestime(new Date());
+            //获取商品信息
+            Goods goods = goodsService.getById(salesVo.getGoodsid());
+            if(goods.getNumber()<salesVo.getNumber()){
+                throw new CustomException("商品库存不足");
+            }
             salesService.save(salesVo);
             return ResultObj.ADD_SUCCESS;
+        }catch (CustomException e){
+            return ResultObj.errorMsg(e.getMessage());
         }catch (Exception e) {
             e.printStackTrace();
             return ResultObj.ADD_ERROR;

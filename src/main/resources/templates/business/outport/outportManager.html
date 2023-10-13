@@ -113,7 +113,7 @@
 <div>
     <table class="layui-hide" id="outportTable" lay-filter="outportTable"></table>
     <div id="outportRowBar" style="display: none;">
-        <button type="button" lay-event="revocation" shiro:hasPermission="outport:revocation" class="layui-btn layui-btn-sm layui-btn-danger layui-btn-radius"><i
+        <button type="button" lay-event="revocation" shiro:hasPermission="outport:revocation" class="layui-btn layui-btn-sm  layui-btn-radius"><i
                 class="layui-icon layui-icon-return"></i>撤回
         </button>
         <button type="button" lay-event="delete" shiro:hasPermission="outport:delete" class="layui-btn layui-btn-sm layui-btn-danger layui-btn-radius"><i
@@ -166,7 +166,7 @@
                 {field: 'outportprice', title: '退货价格', align: 'center',width:'120'},
                 {field: 'remark', title: '备注', align: 'center',width:'130'},
                 {field: 'size', title: '商品规格', align: 'center',width:'100'},
-                {fixed: 'right', title: '操作', toolbar: '#outportRowBar', align: 'center',width:'130'}
+                {fixed: 'right', title: '操作', toolbar: '#outportRowBar', align: 'center',width:'260'}
             ] ],
             done: function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -245,9 +245,9 @@
             });
         }
         //撤回退货信息
-        function deleteOutport(data) {
+        function revocationOutport(data) {
             layer.confirm('您确定要撤回这条退货信息吗？', {icon: 3, title: '提示'}, function (index) {
-                $.post("/outport/deleteOutport", {id: data.id},function (res) {
+                $.get("/outport/revocationOutport", {id: data.id},function (res) {
                     if (res.code == 200) {
                         tableIns.reload({
                             where:"",

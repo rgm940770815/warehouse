@@ -4,6 +4,7 @@ package com.yeqifu.sys.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yeqifu.bus.exception.CustomException;
 import com.yeqifu.sys.common.DataGridView;
 import com.yeqifu.sys.common.ResultObj;
 import com.yeqifu.sys.common.TreeNode;
@@ -155,9 +156,11 @@ public class DeptController {
         try {
             deptService.removeById(deptVo.getId());
             return ResultObj.DELETE_SUCCESS;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (CustomException e) {
             return ResultObj.errorMsg(e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResultObj.DELETE_ERROR;
         }
     }
 

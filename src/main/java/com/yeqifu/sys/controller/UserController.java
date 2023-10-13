@@ -55,7 +55,7 @@ public class UserController {
         IPage<User> page = new Page<User>(userVo.getPage(),userVo.getLimit());
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         //根据用户登录名称以及用户名称模糊查询用户
-        queryWrapper.like(StringUtils.isNotBlank(userVo.getName()),"loginname",userVo.getName()).or().eq(StringUtils.isNotBlank(userVo.getName()),"name",userVo.getName());
+        queryWrapper.like(StringUtils.isNotBlank(userVo.getName()),"loginname",userVo.getName()).or().like(StringUtils.isNotBlank(userVo.getName()),"name",userVo.getName());
         queryWrapper.like(StringUtils.isNotBlank(userVo.getAddress()),"address",userVo.getAddress());
         //查询系统用户
         queryWrapper.eq("type", Constast.USER_TYPE_NORMAL);

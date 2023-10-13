@@ -113,6 +113,9 @@
 <div>
     <table class="layui-hide" id="salesbackTable" lay-filter="salesbackTable"></table>
     <div id="salesbackRowBar" style="display: none;">
+        <button type="button" lay-event="revocation" shiro:hasPermission="salesback:revocation" class="layui-btn layui-btn-sm layui-btn-radius"><i
+                class="layui-icon layui-icon-return"></i>撤回
+        </button>
         <button type="button" lay-event="delete" shiro:hasPermission="salesback:delete" class="layui-btn layui-btn-sm layui-btn-danger layui-btn-radius"><i
                 class="layui-icon layui-icon-delete"></i>删除
         </button>
@@ -163,7 +166,7 @@
                 {field: 'salebackprice', title: '退货价格', align: 'center',width:'120'},
                 {field: 'remark', title: '备注', align: 'center',width:'130'},
                 {field: 'size', title: '商品规格', align: 'center',width:'100'},
-                {fixed: 'right', title: '操作', toolbar: '#salesbackRowBar', align: 'center',width:'130'}
+                {fixed: 'right', title: '操作', toolbar: '#salesbackRowBar', align: 'center',width:'260'}
             ] ],
             done: function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -195,6 +198,9 @@
             switch (obj.event) {
                 case 'delete':
                     deleteSalesback(data);
+                    break;
+                case 'revocation':
+                    revocationSalesback(data);
                     break;
             };
         });
@@ -228,6 +234,21 @@
         function deleteSalesback(data) {
             layer.confirm('您确定要删除这条退货信息吗？', {icon: 3, title: '提示'}, function (index) {
                 $.post("/salesback/deleteSalesback", {id: data.id},function (res) {
+                    if (res.code == 200) {
+                        tableIns.reload({
+                            where:"",
+                        });
+                    }
+                    layer.msg(res.msg);
+                });
+                layer.close(index);
+            });
+        }
+
+        //撤回退货信息
+        function revocationSalesback(data) {
+            layer.confirm('您确定要撤回这条退货信息吗？', {icon: 3, title: '提示'}, function (index) {
+                $.get("/salesback/revocationSalesback", {id: data.id},function (res) {
                     if (res.code == 200) {
                         tableIns.reload({
                             where:"",

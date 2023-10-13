@@ -20,4 +20,10 @@ public interface IOutportService extends IService<Outport> {
      * @param remark    备注
      */
     void addOutport(Integer id, Integer number, String remark);
+
+    /**
+     * 撤回退货处理
+     * @param id 退货单id
+     */
+    void revocationByid(Integer id);
 }

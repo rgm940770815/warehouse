@@ -66,4 +66,10 @@ public class Sales implements Serializable {
     @TableField(exist = false)
     private String size;
 
+    /**
+     * 销售员名称
+     */
+    @TableField(exist = false)
+    private String salesmanname;
+
 }
