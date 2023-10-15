@@ -70,6 +70,6 @@ public class Sales implements Serializable {
      * 销售员名称
      */
     @TableField(exist = false)
-    private String salesmanname;
+    private String username;
 
 }

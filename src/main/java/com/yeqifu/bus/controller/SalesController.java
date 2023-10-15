@@ -12,11 +12,16 @@ import com.yeqifu.bus.service.ICustomerService;
 import com.yeqifu.bus.service.IGoodsService;
 import com.yeqifu.bus.service.ISalesService;
 import com.yeqifu.bus.vo.SalesVo;
+import com.yeqifu.sys.common.ActiverUser;
 import com.yeqifu.sys.common.DataGridView;
 import com.yeqifu.sys.common.ResultObj;
 import com.yeqifu.sys.common.WebUtils;
+import com.yeqifu.sys.config.ShiroAutoConfiguration;
 import com.yeqifu.sys.entity.User;
+import com.yeqifu.sys.realm.UserRealm;
 import com.yeqifu.sys.service.IUserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,40 +60,8 @@ public class SalesController {
      */
     @RequestMapping("loadAllSales")
     public DataGridView loadAllSales(SalesVo salesVo){
-        IPage<Sales> page = new Page<>(salesVo.getPage(),salesVo.getLimit());
-        QueryWrapper<Sales> queryWrapper = new QueryWrapper<Sales>();
-        //根据客户进行模糊查询
-        queryWrapper.eq(salesVo.getCustomerid()!=null&&salesVo.getCustomerid()!=0,"customerid",salesVo.getCustomerid());
-        //根据商品模糊查询
-        queryWrapper.eq(salesVo.getGoodsid()!=null&&salesVo.getGoodsid()!=0,"goodsid",salesVo.getGoodsid());
-        //根据时间进行模糊查询
-        queryWrapper.ge(salesVo.getStartTime()!=null,"salestime",salesVo.getStartTime());
-        queryWrapper.le(salesVo.getEndTime()!=null,"salestime",salesVo.getEndTime());
-        IPage<Sales> page1 = salesService.page(page, queryWrapper);
-        List<Sales> records = page1.getRecords();
-        for (Sales sales : records) {
-            //设置客户姓名
-            Customer customer = customerService.getById(sales.getCustomerid());
-            if(null!=customer){
-                sales.setCustomername(customer.getCustomername());
-            }
-            //设置商品名称
-            Goods goods = goodsService.getById(sales.getGoodsid());
-            if (null!=goods){
-                //设置商品名称
-                sales.setGoodsname(goods.getGoodsname());
-                //设置商品规格
-                sales.setSize(goods.getSize());
-            }
-            //设置销售员名称
-            User user = userService.getById(sales.getUserid());
-            if(null!=user){
-                //设置销售员名称
-                sales.setSalesmanname(user.getName());
-            }
-
-        }
-        return new DataGridView(page1.getTotal(),page1.getRecords());
+        IPage<Sales> p = salesService.getList(salesVo);
+        return new DataGridView(p.getTotal(),p.getRecords());
     }
 
     /**

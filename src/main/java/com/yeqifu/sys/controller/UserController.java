@@ -52,35 +52,10 @@ public class UserController {
      */
     @RequestMapping("loadAllUser")
     public DataGridView loadAllUser(UserVo userVo){
-        IPage<User> page = new Page<User>(userVo.getPage(),userVo.getLimit());
-        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        //根据用户登录名称以及用户名称模糊查询用户
-        queryWrapper.like(StringUtils.isNotBlank(userVo.getName()),"loginname",userVo.getName()).or().like(StringUtils.isNotBlank(userVo.getName()),"name",userVo.getName());
-        queryWrapper.like(StringUtils.isNotBlank(userVo.getAddress()),"address",userVo.getAddress());
-        //查询系统用户
-        queryWrapper.eq("type", Constast.USER_TYPE_NORMAL);
-        queryWrapper.eq(userVo.getDeptid()!=null,"deptid",userVo.getDeptid());
-        queryWrapper.orderByDesc("id");
-        userService.page(page,queryWrapper);
-
+        IPage<User> p = userService.getList(userVo);
         //将所有用户数据放入list中
-        List<User> list = page.getRecords();
-        for (User user : list) {
-            Integer deptId = user.getDeptid();
-            if (deptId!=null){
-                //先从缓存中去取，如果缓存中没有就去数据库中取
-                Dept one = deptService.getById(deptId);
-                //设置user的部门名称
-                user.setDeptname(one.getName());
-            }
-            Integer mgr = user.getMgr();
-            if (mgr!=null&&mgr!=0){
-                User one = userService.getById(mgr);
-                //设置user的领导名称
-                user.setLeadername(one.getName());
-            }
-        }
-        return new DataGridView(page.getTotal(),list);
+        List<User> list = p.getRecords();
+        return new DataGridView(p.getTotal(),list);
     }
 
     /**

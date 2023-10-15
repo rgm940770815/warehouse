@@ -1,7 +1,11 @@
 package com.yeqifu.bus.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yeqifu.bus.entity.Salesback;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yeqifu.bus.vo.SalesbackVo;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -26,4 +30,5 @@ public interface ISalesbackService extends IService<Salesback> {
      * @param id 退货单ID
      */
     void revocationByid(Integer id);
+
 }

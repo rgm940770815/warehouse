@@ -1,7 +1,9 @@
 package com.yeqifu.sys.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yeqifu.sys.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yeqifu.sys.vo.UserVo;
 
 /**
  * <p>
@@ -26,4 +28,6 @@ public interface IUserService extends IService<User> {
      * @return
      */
     Boolean queryMgrByUserId(Integer userId);
+
+    IPage<User> getList(UserVo userVo);
 }

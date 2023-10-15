@@ -2,10 +2,12 @@ package com.yeqifu.sys.common;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +60,11 @@ public class AppFileUtils {
     public static ResponseEntity<Object> createResponseEntity(String path) {
         //1,构造文件对象
         File file=new File(UPLOAD_PATH, path);
+
+        if(Constast.DEFAULT_IMG_USER.equals(path)|| Constast.DEFAULT_IMG_GOODS.equals(path)){
+            String resource = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static";
+            file = new File(resource, path);
+        }
         if(file.exists()) {
             //将下载的文件，封装byte[]
             byte[] bytes=null;

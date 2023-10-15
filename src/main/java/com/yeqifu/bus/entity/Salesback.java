@@ -48,6 +48,10 @@ public class Salesback implements Serializable {
 
     private Integer salesid;
 
+    private Integer userid;
+
+    private String username;
+
     /**
      * 客户姓名
      */

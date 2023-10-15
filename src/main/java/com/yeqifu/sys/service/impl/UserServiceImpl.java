@@ -1,11 +1,14 @@
 package com.yeqifu.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yeqifu.sys.entity.User;
 import com.yeqifu.sys.mapper.RoleMapper;
 import com.yeqifu.sys.mapper.UserMapper;
 import com.yeqifu.sys.service.IUserService;
+import com.yeqifu.sys.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,5 +89,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }else {
             return false;
         }
+    }
+
+    @Override
+    public IPage<User> getList(UserVo userVo) {
+        Page page = new Page();
+        page.setCurrent(userVo.getPage());
+        page.setSize(userVo.getLimit());
+        return userMapper.getList(page,userVo);
     }
 }

@@ -14,12 +14,16 @@ import com.yeqifu.bus.service.ISalesbackService;
 import com.yeqifu.bus.vo.SalesbackVo;
 import com.yeqifu.sys.common.DataGridView;
 import com.yeqifu.sys.common.ResultObj;
+import com.yeqifu.sys.common.WebUtils;
+import com.yeqifu.sys.entity.User;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -69,6 +73,18 @@ public class SalesbackController {
     public DataGridView loadAllSalesback(SalesbackVo salesbackVo){
         IPage<Salesback> page = new Page<Salesback>(salesbackVo.getPage(),salesbackVo.getLimit());
         QueryWrapper<Salesback> queryWrapper = new QueryWrapper<Salesback>();
+        //获取当前登录用户信息
+        User currentUser = (User) WebUtils.getSession().getAttribute("user");
+        //验证该用户是否有通过销售员模糊查询的权限
+        boolean b = SecurityUtils.getSubject().isPermitted("salesback:salesman");
+        if(!b){
+            //无权限, 则只能查当前登录用户的销售退货记录
+            queryWrapper.eq(true,"userid",currentUser.getId());
+        }else {
+            //有权限, 则根据销售员模糊查询
+            queryWrapper.eq(salesbackVo.getUserid()!=null && salesbackVo.getUserid() != 0,"userid",salesbackVo.getUserid());
+        }
+
         //对客户进行查询
         queryWrapper.eq(salesbackVo.getCustomerid()!=null&&salesbackVo.getCustomerid()!=0,"customerid",salesbackVo.getCustomerid());
         //对商品进行查询

@@ -157,11 +157,10 @@
             height: "full-190",
             cols: [ [
                 {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: 'ID', align: 'center'},
                 {field: 'title', title: '公告标题', align: 'center'},
                 {field: 'opername', title: '操作人', align: 'center'},
                 {field: 'createtime', title: '创建时间', align: 'center'},
-                {fixed: 'right', title: '操作', toolbar: '#noticeRowBar', align: 'center'}
+                {fixed: 'right', title: '操作', toolbar: '#noticeRowBar', align: 'center', width: '260'}
             ] ],
             done:function (data, curr, count) {
                 if(data.data.length==0&&curr!=1){   //不是第一页时，如果当前返回的数据为0那么就返回上一页

@@ -1,7 +1,10 @@
 package com.yeqifu.bus.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yeqifu.bus.entity.Sales;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yeqifu.bus.vo.SalesVo;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -21,4 +24,5 @@ public interface SalesMapper extends BaseMapper<Sales> {
      */
     void updateNumberByid(@Param("salesid") Integer salesid, @Param("number") Integer number);
 
+    IPage<Sales> getList(Page page, SalesVo salesVo);
 }

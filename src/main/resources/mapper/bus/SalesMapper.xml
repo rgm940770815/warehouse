@@ -5,4 +5,27 @@
     <update id="updateNumberByid">
         update bus_sales set `number` = (`number` + #{number}) where id = #{salesid}
     </update>
+    <select id="getList" resultType="com.yeqifu.bus.entity.Sales">
+        select
+               *,
+               (select customername from bus_customer where id = customerid) as customername,
+               (select goodsname from bus_goods where id = goodsid) as goodsname,
+               (select `size` from bus_goods where id = goodsid) as `size`,
+               (select `name` from sys_user where id = userid) as username
+        from bus_sales where 1=1
+        <if test="salesVo.customerid != null and salesVo.customerid != 0">
+            and customerid = #{salesVo.customerid}
+        </if>
+        <if test="salesVo.goodsid != null and salesVo.goodsid != 0">
+            and goodsid = #{salesVo.goodsid}
+        </if>
+        <if test="salesVo.startTime != null and salesVo.startTime != 0">
+            and salestime >= #{salesVo.startTime}
+        </if>
+        <if test="salesVo.endTime != null and salesVo.endTime != 0">
+            and #{salesVo.endTime} >= salestime
+        </if>
+        order by salestime desc
+
+    </select>
 </mapper>

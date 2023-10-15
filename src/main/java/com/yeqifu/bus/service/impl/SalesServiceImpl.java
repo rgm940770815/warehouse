@@ -1,11 +1,17 @@
 package com.yeqifu.bus.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yeqifu.bus.entity.Goods;
 import com.yeqifu.bus.entity.Sales;
 import com.yeqifu.bus.mapper.GoodsMapper;
 import com.yeqifu.bus.mapper.SalesMapper;
 import com.yeqifu.bus.service.ISalesService;
+import com.yeqifu.bus.vo.SalesVo;
+import com.yeqifu.sys.common.WebUtils;
+import com.yeqifu.sys.entity.User;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +30,9 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
 
     @Autowired
     private GoodsMapper goodsMapper;
+
+    @Autowired
+    private SalesMapper salesMapper;
 
     /**
      * 添加商品销售
@@ -71,5 +80,26 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
         goods.setNumber(goods.getNumber()+sales.getNumber());
         goodsMapper.updateById(goods);
         return super.removeById(id);
+    }
+
+    /**
+     * 查询商品销售列表
+     * @param salesVo
+     * @return
+     */
+    @Override
+    public IPage<Sales> getList(SalesVo salesVo) {
+        Page page = new Page();
+        page.setCurrent(salesVo.getPage());
+        page.setSize(salesVo.getLimit());
+        //获取当前登录用户
+        User currentUser = (User) WebUtils.getSession().getAttribute("user");
+        //验证当前用户是否有根据销售员模糊查询权限
+        boolean b = SecurityUtils.getSubject().isPermitted("sales:salesman");
+        if(!b){
+            //无权限,则只能查询他自己的销售记录
+            salesVo.setUserid(currentUser.getId());
+        }
+        return salesMapper.getList(page,salesVo);
     }
 }

@@ -1,7 +1,11 @@
 package com.yeqifu.bus.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yeqifu.bus.entity.Salesback;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yeqifu.bus.vo.SalesbackVo;
+
+import java.util.Map;
 
 /**
  * <p>
