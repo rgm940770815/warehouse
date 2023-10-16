@@ -105,7 +105,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block" style="text-align: center;padding-right: 7%">
-                <button type="button" class="layui-btn layui-btn-radius" lay-submit="" id="doSubmit">
+                <button type="button" class="layui-btn layui-btn-radius" lay-submit="" lay-filter="doSubmit" id="doSubmit">
                     <i class="layui-icon layui-icon-search layui-icon-normal"></i>提交
                 </button>
                 <button type="reset" class="layui-btn layui-btn-radius layui-btn-warm">
@@ -157,10 +157,11 @@
             height: "full-190",
             cols: [ [
                 {type: 'checkbox', fixed: 'left'},
+                {field: 'id', title: 'ID', align: 'center'},
                 {field: 'title', title: '公告标题', align: 'center'},
                 {field: 'opername', title: '操作人', align: 'center'},
                 {field: 'createtime', title: '创建时间', align: 'center'},
-                {fixed: 'right', title: '操作', toolbar: '#noticeRowBar', align: 'center', width: '260'}
+                {fixed: 'right', title: '操作', toolbar: '#noticeRowBar', align: 'center'}
             ] ],
             done:function (data, curr, count) {
                 if(data.data.length==0&&curr!=1){   //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -174,7 +175,7 @@
         });
 
         //初始化富文本编译器
-        var editIndex = layedit.build('content');
+        var editIndex;
 
         //监控模糊查询按钮事件
         form.on("submit(doSearch)", function (data) {
@@ -227,6 +228,7 @@
                 area:['800px','550px'],
                 title:'添加公告',
                 success:function () {
+                    editIndex = layedit.build('content')
                     $("#dataFrm")[0].reset();
                     //重置富文本编译器的内容为空
                     layedit.setContent(editIndex,"");
@@ -244,6 +246,7 @@
                 area:['800px','550px'],
                 title:'修改公告',
                 success:function () {
+                    editIndex = layedit.build('content')
                     $("#dataFrm")[0].reset();
                     //装载新的数据
                     form.val("dataFrm",data);
@@ -253,11 +256,12 @@
             });
         };
 
-        $("#doSubmit").click(function () {
+        form.on("submit(doSubmit)",function(){
             //alert(url);
             //同步富文本和textarea里面的内容
             layedit.sync(editIndex);
             var data = $("#dataFrm").serialize();
+            console.log("data",data);
             $.post(url,data,function (res) {
                 if (res.code==200){
                     tableIns.reload();

@@ -1,6 +1,7 @@
 package com.yeqifu.sys.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yeqifu.sys.common.*;
@@ -46,6 +47,9 @@ public class MenuController {
         queryWrapper.eq("type",Constast.TYPE_MENU);
         //菜单必须可用
         queryWrapper.eq("available", Constast.AVAILABLE_TRUE);
+        //菜单搜索
+        queryWrapper.like(permissionVo.getTitle()!=null && !"".equals(permissionVo.getTitle()),"title","%"+permissionVo.getTitle()+"%");
+        queryWrapper.notIn(permissionVo.getTitle()!=null && !"".equals(permissionVo.getTitle()),"pid","1");
 
         //获得用户  判断用户的类型
         User user = (User) WebUtils.getSession().getAttribute("user");
@@ -78,7 +82,7 @@ public class MenuController {
 
         }
 
-        List<TreeNode> treeNodes = new ArrayList<TreeNode>();
+        Set<TreeNode> treeNodes = new HashSet<>();
         for (Permission p : list) {
             Integer id =p.getId();
             Integer pid = p.getPid();
@@ -91,7 +95,7 @@ public class MenuController {
 
         //构造层级关系
         List<TreeNode> list2 = TreeNodeBuilder.build(treeNodes,1);
-        return new DataGridView(list2);
+        return new DataGridView(StringUtils.isNotBlank(permissionVo.getTitle()) ? list :list2);
 
     }
     

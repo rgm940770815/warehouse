@@ -49,12 +49,13 @@
 			</div>
 			<!-- 搜索 -->
 			<div class="layui-form component">
+				<input class="layui-input" name="search" id="search" placeholder="搜索页面或功能" lay-filter="searchPage">
 <!--				<select name="search" id="search" lay-search lay-filter="searchPage">-->
 <!--					<option value="">搜索页面或功能</option>-->
 <!--					<option value="1">layer</option>-->
 <!--					<option value="2">form</option>-->
 <!--				</select>-->
-<!--				<i class="layui-icon">&#xe615;</i>-->
+				<i class="layui-icon">&#xe615;</i>
 			</div>
 			<div class="navBar layui-side-scroll" id="navBar">
 				<ul class="layui-nav layui-nav-tree">
@@ -117,9 +118,25 @@
 				url : "/menu/loadIndexLeftMenuJson" //获取菜单json地址
 			});
 
+		//实现切换tab 自动刷新当前页面
+		element.on('tab(bodyTab)', function (data) {
+			var index= $(".layui-tab-item.layui-show").find("iframe").attr("src");
+			$(".layui-tab-item.layui-show").find("iframe").attr("src", index);
+		});
+
 		//通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
+		// $("#search").change(function (val) {
+		// 	console.log("val:",val);
+		// 	console.log("$('#search').val():",$('#search').val());
+		// 	getData();
+		// })
+		$("#search").bind('input',function (val) {
+			console.log("val:",val);
+			console.log("$('#search').val():",$('#search').val());
+			getData();
+		})
 		function getData(json){
-			$.getJSON(tab.tabConfig.url,function(data){
+			$.getJSON(tab.tabConfig.url,{title:$('#search').val()},function(data){
 					dataStr = data.data;
 					//重新渲染左侧菜单
 					tab.render();

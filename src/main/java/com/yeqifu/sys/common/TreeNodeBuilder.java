@@ -1,6 +1,7 @@
 package com.yeqifu.sys.common;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 /**
  * 把没有层级关系的集合变成有层级关系的集合
@@ -8,7 +9,7 @@ import java.util.List;
  * @Date: 2019/11/22 16:31
  */
 public class TreeNodeBuilder {
-    public static List<TreeNode> build(List<TreeNode> treeNodes, Integer topPid) {
+    public static List<TreeNode> build(Collection<TreeNode> treeNodes, Integer topPid) {
         List<TreeNode> nodes = new ArrayList<TreeNode>();
         for (TreeNode n1 : treeNodes) {
             if (n1.getPid()==topPid){
