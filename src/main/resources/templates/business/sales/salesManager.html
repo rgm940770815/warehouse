@@ -74,16 +74,16 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户名称</label>
             <div class="layui-input-inline">
-                <select name="customerid" id="select_customerid">
-                    <option value="0">请选择客户</option>
+                <select name="customerid" id="select_customerid" lay-search>
+                    <option value="">请选择客户</option>
                 </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">商品名称</label>
             <div class="layui-input-inline">
-                <select name="goodsid" id="select_goodsid">
-                    <option value="0">请选择商品</option>
+                <select name="goodsid" id="select_goodsid" lay-search>
+                    <option value="">请选择商品</option>
                 </select>
             </div>
         </div>
@@ -106,7 +106,7 @@
             <div class="layui-input-inline">
                 <select lay-search type="text" name="userid" id="select_userid"
                        class="layui-input input-radius">
-                    <option value="0">请选择销售员</option>
+                    <option value="">请选择销售员</option>
                 </select>
             </div>
         </div>
@@ -151,8 +151,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">客户名称</label>
                 <div class="layui-input-inline">
-                    <select name="customerid" id="customerid" lay-filter="customerid">
-                        <option value="0">请选择客户</option>
+                    <select name="customerid" id="customerid" lay-filter="customerid" lay-verify="required" lay-search>
+                        <option value="">请选择客户</option>
                     </select>
                     <div class="mydiv" title="不可修改" style="position:absolute;width:100%;height:100%;left:0px;top:0px;background:#fff;opacity:0;filter:alpha(opacity=0)"> </div>
                 </div>
@@ -160,8 +160,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">商品名称</label>
                 <div class="layui-input-inline">
-                    <select name="goodsid" id="goodsid">
-                        <option value="0">请选择商品</option>
+                    <select name="goodsid" id="goodsid"  lay-verify="required" lay-search>
+                        <option value="">请选择商品</option>
                     </select>
                 </div>
                 <div class="mydiv" title="不可修改" style="position:absolute;width:100%;height:100%;left:0px;top:0px;background:#fff;opacity:0;filter:alpha(opacity=0)"> </div>
@@ -169,8 +169,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">销售员</label>
                 <div class="layui-input-inline">
-                    <select lay-search name="userid" id="userid">
-                        <option value="0">请选择销售员</option>
+                    <select name="userid" id="userid" lay-verify="required" lay-search >
+                        <option value="">请选择销售员</option>
                     </select>
                 </div>
                 <div class="mydiv" title="不可修改" style="position:absolute;width:100%;height:100%;left:0px;top:0px;background:#fff;opacity:0;filter:alpha(opacity=0)"> </div>
@@ -361,7 +361,7 @@
         $.get("/customer/loadAllCustomerForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_customerid");
-            var html = '<option value="0">请选择客户</option>';
+            var html = '<option value="">请选择客户</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.customername+'</option>';
             })
@@ -373,7 +373,7 @@
         $.get("/goods/loadAllGoodsForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_goodsid");
-            var html = '<option value="0">请选择商品</option>';
+            var html = '<option value="">请选择商品</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.goodsname+'-['+item.size+']-'+'['+item.providername+']'+'</option>';
             });
@@ -399,6 +399,8 @@
                     $("#dataFrm")[0].reset();
                     //初始化客户名称的下拉列表
                     initCustomerSelect();
+                    //初始化商品下拉列表
+                    initGoodsSelect();
                     //初始化销售员下拉选
                     initSalesmanSelect('userid');
                     //使该div隐藏
@@ -424,13 +426,15 @@
                     form.val("dataFrm",data);
                     //客户进行反选
                     initCustomerSelect(data.customerid);
+                    //商品进行反选
+                    initGoodsSelect(data.goodsid);
                     //销售员进行反选
                     initSalesmanSelect('userid',data.userid);
                     //商品下拉列表的回显
                     $.get("/goods/loadAllGoodsForSelect",function(res){
                         var redata=res.data;
                         var dom=$("#goodsid");
-                        var html='<option value="0">请选择供应商</option>'
+                        var html='<option value="">请选择供应商</option>'
                         $.each(redata,function(index,item){
                             if (data.goodsid===item.id){
                                 html+='<option value="'+item.id+'" selected>'+item.goodsname+'</option>'
@@ -451,13 +455,10 @@
 
         //初始化添加和修改页面的下拉列表
         function initCustomerSelect(customerid) {
-            //重置商品的下拉列表
-            var dom = $("#goodsid");
-            dom.html("");
             $.get("/customer/loadAllCustomerForSelect",function (res) {
                 var data = res.data;
                 var dom = $("#customerid");
-                var html = '<option value="0">请选择客户</option>';
+                var html = '<option value="">请选择客户</option>';
                 $.each(data,function (index, item) {
                     html += '<option value="'+item.id+'">'+item.customername+'</option>';
                 });
@@ -471,18 +472,13 @@
             });
         };
 
-        //监听客户的下拉列表的事件
-        form.on('select(customerid)',function (data) {
-           var customerid = data.value;
-           initGoodsSelect(customerid);
-        });
 
         //加载商品的下拉列表
         function initGoodsSelect(goodsid) {
             $.get("/goods/loadAllGoodsForSelect",function (res) {
                 var data = res.data;
                 var dom = $("#goodsid");
-                var html = '<option value="0">请选择商品</option>';
+                var html = '<option value="">请选择商品</option>';
                 $.each(data,function (index, item) {
                     html += '<option value="'+item.id+'">'+item.goodsname+'-['+item.size+']-'+'['+item.providername+']'+'</option>';
                 });
@@ -501,7 +497,7 @@
             $.get("/user/loadAllUser",{limit:9999},function (res) {
                 var data = res.data;
                 var dom = $("#"+selectId);
-                var html = '<option value="0">请选择销售员</option>';
+                var html = '<option value="">请选择销售员</option>';
                 $.each(data,function (index, item) {
                     html += '<option value="'+item.id+'">'+item.name+'-['+item.loginname+']</option>';
                 });

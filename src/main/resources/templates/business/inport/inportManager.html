@@ -57,6 +57,11 @@
             height: 30px;
             margin-top: 4px;
         }
+        input.layui-input {
+            border-radius: 10px;
+            height: 30px;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
@@ -69,16 +74,16 @@
         <div class="layui-inline">
             <label class="layui-form-label">供应商名称</label>
             <div class="layui-input-inline">
-                <select name="providerid" id="select_providerid">
-                    <option value="0">请选择供应商</option>
+                <select name="providerid" id="select_providerid" lay-search>
+                    <option value="">请选择供应商</option>
                 </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">商品名称</label>
             <div class="layui-input-inline">
-                <select name="goodsid" id="select_goodsid">
-                    <option value="0">请选择商品</option>
+                <select name="goodsid" id="select_goodsid" lay-search>
+                    <option value="">请选择商品</option>
                 </select>
             </div>
         </div>
@@ -137,8 +142,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">供应商名称</label>
                 <div class="layui-input-inline">
-                    <select name="providerid" id="providerid" lay-filter="providerid">
-                        <option value="0">请选择供应商</option>
+                    <select name="providerid" id="providerid" lay-filter="providerid" lay-verify="required" lay-search>
+                        <option value="">请选择供应商</option>
                     </select>
                     <div class="mydiv" title="不可修改" style="position:absolute;width:100%;height:100%;left:0px;top:0px;background:#fff;opacity:0;filter:alpha(opacity=0)"> </div>
                 </div>
@@ -146,8 +151,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">商品名称</label>
                 <div class="layui-input-inline">
-                    <select name="goodsid" id="goodsid">
-                        <option value="0">请选择商品</option>
+                    <select name="goodsid" id="goodsid" lay-verify="required" lay-search>
+                        <option value="">请选择商品</option>
                     </select>
                 </div>
                 <div class="mydiv" title="不可修改" style="position:absolute;width:100%;height:100%;left:0px;top:0px;background:#fff;opacity:0;filter:alpha(opacity=0)"> </div>
@@ -177,12 +182,10 @@
                     <input type="radio" name="paytype" value="银联" title="银联">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">进货备注</label>
                 <div class="layui-input-block">
-                    <textarea name="remark" placeholder="请输入进货备注" class="layui-textarea" cols="200" rows="8"></textarea>
+                    <textarea name="remark" placeholder="请输入进货备注" class="layui-textarea" cols="50" rows="4"></textarea>
                 </div>
             </div>
         </div>
@@ -336,7 +339,7 @@
         $.get("/provider/loadAllProviderForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_providerid");
-            var html = '<option value="0">请选择供应商</option>';
+            var html = '<option value="">请选择供应商</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.providername+'</option>';
             })
@@ -348,7 +351,7 @@
         $.get("/goods/loadAllGoodsForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_goodsid");
-            var html = '<option value="0">请选择商品</option>';
+            var html = '<option value="">请选择商品</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.goodsname+'-['+item.size+']-'+'['+item.providername+']'+'</option>';
             });
@@ -395,8 +398,8 @@
                     form.val("dataFrm",data);
                     //供应商进行反选
                     initProviderSelect(data.providerid);
-                    //商品进行反选
-                    initGoodsSelect(data.providerid,data.goodsid);
+                    // //商品进行反选
+                    // initGoodsSelect(data.providerid,data.goodsid);
                     //禁用供应商和商品的下拉列表
                     $(".mydiv").show();
                     url="/inport/updateInport";
@@ -412,7 +415,7 @@
             $.get("/provider/loadAllProviderForSelect",function (res) {
                 var data = res.data;
                 var dom = $("#providerid");
-                var html = '<option value="0">请选择供应商</option>';
+                var html = '<option value="">请选择供应商</option>';
                 $.each(data,function (index, item) {
                     html += '<option value="'+item.id+'">'+item.providername+'</option>';
                 });
@@ -434,10 +437,16 @@
 
         //加载商品的下拉列表
         function initGoodsSelect(providerid, goodsid) {
+            if(!providerid){
+                $("#goodsid").html('<option value="">请先选择供应商</option>')
+                //重新渲染下拉列表
+                form.render("select");
+                return;
+            }
             $.get("/goods/loadGoodsByProviderId",{providerid:providerid},function (res) {
                 var data = res.data;
                 var dom = $("#goodsid");
-                var html = '<option value="0">请选择商品</option>';
+                var html = '<option value="">请选择商品</option>';
                 $.each(data,function (index, item) {
                     html += '<option value="'+item.id+'">'+item.goodsname+'-['+item.size+']-'+'['+item.providername+']'+'</option>';
                 });

@@ -51,7 +51,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_CUSTOMER_ADD)
+//    @Around(value = POINTCUT_CUSTOMER_ADD)
     public Object cacheCustomerAdd(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Customer object = (Customer) joinPoint.getArgs()[0];
@@ -67,7 +67,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_CUSTOMER_GET)
+//    @Around(value = POINTCUT_CUSTOMER_GET)
     public Object cacheCustomerGet(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Integer object = (Integer) joinPoint.getArgs()[0];
@@ -89,7 +89,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_CUSTOMER_UPDATE)
+//    @Around(value = POINTCUT_CUSTOMER_UPDATE)
     public Object cacheCustomerUpdate(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Customer customerVo = (Customer) joinPoint.getArgs()[0];
@@ -111,7 +111,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_CUSTOMER_DELETE)
+//    @Around(value = POINTCUT_CUSTOMER_DELETE)
     public Object cacheCustomerDelete(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Integer id = (Integer) joinPoint.getArgs()[0];
@@ -128,7 +128,7 @@ public class BusinessCacheAspect {
      *
      * @throws Throwable
      */
-    @Around(value = POINTCUT_CUSTOMER_BATCHDELETE)
+//    @Around(value = POINTCUT_CUSTOMER_BATCHDELETE)
     public Object cacheCustomerBatchDelete(ProceedingJoinPoint joinPoint) throws Throwable {
         // 取出第一个参数
         @SuppressWarnings("unchecked")
@@ -160,7 +160,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_GOODS_ADD)
+//    @Around(value = POINTCUT_GOODS_ADD)
     public Object cacheGoodsAdd(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Goods object = (Goods) joinPoint.getArgs()[0];
@@ -176,7 +176,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_GOODS_GET)
+//    @Around(value = POINTCUT_GOODS_GET)
     public Object cacheGoodsGet(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Integer object = (Integer) joinPoint.getArgs()[0];
@@ -198,7 +198,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_GOODS_UPDATE)
+//    @Around(value = POINTCUT_GOODS_UPDATE)
     public Object cacheGoodsUpdate(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Goods goodsVo = (Goods) joinPoint.getArgs()[0];
@@ -220,7 +220,7 @@ public class BusinessCacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_GOODS_DELETE)
+//    @Around(value = POINTCUT_GOODS_DELETE)
     public Object cacheGoodsDelete(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Integer id = (Integer) joinPoint.getArgs()[0];

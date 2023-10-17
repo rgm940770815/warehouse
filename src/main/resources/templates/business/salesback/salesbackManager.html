@@ -74,16 +74,16 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户名称</label>
             <div class="layui-input-inline">
-                <select name="customerid" id="select_customerid">
-                    <option value="0">请选择客户</option>
+                <select name="customerid" id="select_customerid" lay-search>
+                    <option value="">请选择客户</option>
                 </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">商品名称</label>
             <div class="layui-input-inline">
-                <select name="goodsid" id="select_goodsid">
-                    <option value="0">请选择商品</option>
+                <select name="goodsid" id="select_goodsid" lay-search>
+                    <option value="">请选择商品</option>
                 </select>
             </div>
         </div>
@@ -106,7 +106,7 @@
             <div class="layui-input-inline">
                 <select lay-search type="text" name="userid" id="select_userid"
                         class="layui-input input-radius">
-                    <option value="0">请选择销售员</option>
+                    <option value="">请选择销售员</option>
                 </select>
             </div>
         </div>
@@ -224,7 +224,7 @@
         $.get("/customer/loadAllCustomerForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_customerid");
-            var html = '<option value="0">请选择客户</option>';
+            var html = '<option value="">请选择客户</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.customername+'</option>';
             })
@@ -236,7 +236,7 @@
         $.get("/goods/loadAllGoodsForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_goodsid");
-            var html = '<option value="0">请选择商品</option>';
+            var html = '<option value="">请选择商品</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.goodsname+'-['+item.size+']-'+'['+item.providername+']'+'</option>';
             });
@@ -248,7 +248,7 @@
         $.get("/user/loadAllUser",{limit:9999},function (res) {
             var data = res.data;
             var dom = $("#select_userid");
-            var html = '<option value="0">请选择销售员</option>';
+            var html = '<option value="">请选择销售员</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.name+'-['+item.loginname+']</option>';
             });

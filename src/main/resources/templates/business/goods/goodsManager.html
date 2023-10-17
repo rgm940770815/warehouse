@@ -37,6 +37,11 @@
             height: 30px;
             margin-top: 4px;
         }
+        input.layui-input {
+            border-radius: 10px;
+            height: 30px;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
@@ -49,8 +54,8 @@
         <div class="layui-inline">
             <label class="layui-form-label">供应商</label>
             <div class="layui-input-inline">
-                <select name="providerid" id="select_providerid">
-                    <option value="0">请选择供应商</option>
+                <select name="providerid" id="select_providerid" lay-search>
+                    <option value="">请选择供应商</option>
                 </select>
             </div>
         </div>
@@ -127,8 +132,8 @@
                     <div class="layui-form-item magt3">
                         <label class="layui-form-label">供应商</label>
                         <div class="layui-input-block">
-                            <select name="providerid" id="providerid">
-                                <option value="0">请选择供应商</option>
+                            <select name="providerid" id="providerid" lay-verify="required" lay-search>
+                                <option value="">请选择供应商</option>
                             </select>
                         </div>
                     </div>
@@ -166,6 +171,8 @@
                         <input type="text" class="layui-input input-radius" name="goodspackage" lay-verify="required" placeholder="请输入商品包装">
                     </div>
                 </div>
+            </div>
+            <div class="layui-form-item magb0">
                 <div class="layui-inline">
                     <label class="layui-form-label">规格</label>
                     <div class="layui-input-inline">
@@ -178,6 +185,8 @@
                         <input type="text" class="layui-input input-radius" name="productcode" lay-verify="required" placeholder="请输入商品生产批号">
                     </div>
                 </div>
+            </div>
+            <div class="layui-form-item magb0">
                 <div class="layui-inline">
                     <label class="layui-form-label">批准文号</label>
                     <div class="layui-input-inline">
@@ -190,6 +199,8 @@
                         <input type="text" class="layui-input input-radius" name="price" lay-verify="required|number" placeholder="请输入商品销售价格">
                     </div>
                 </div>
+            </div>
+            <div class="layui-form-item magb0">
                 <div class="layui-inline">
                     <label class="layui-form-label">库存量</label>
                     <div class="layui-input-inline">
@@ -284,7 +295,7 @@
         $.get("/provider/loadAllProviderForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_providerid");
-            var html = '<option value="0">请选择供应商</option>';
+            var html = '<option value="">请选择供应商</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.providername+'</option>';
             })
@@ -363,7 +374,7 @@
                     $.get("/provider/loadAllProviderForSelect",function(res){
                         var data=res.data;
                         var dom=$("#providerid");
-                        var html='<option value="0">请选择供应商</option>'
+                        var html='<option value="">请选择供应商</option>'
                         $.each(data,function(index,item){
                             html+='<option value="'+item.id+'">'+item.providername+'</option>'
                         });
@@ -396,7 +407,7 @@
                     $.get("/provider/loadAllProviderForSelect",function(res){
                         var redata=res.data;
                         var dom=$("#providerid");
-                        var html='<option value="0">请选择供应商</option>'
+                        var html='<option value="">请选择供应商</option>'
                         $.each(redata,function(index,item){
                             if (data.providerid===item.id){
                                 html+='<option value="'+item.id+'" selected>'+item.providername+'</option>'

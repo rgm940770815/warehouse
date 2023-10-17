@@ -47,7 +47,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_DEPT_ADD)
+//    @Around(value = POINTCUT_DEPT_ADD)
     public Object cacheDeptAdd(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Dept object = (Dept) joinPoint.getArgs()[0];
@@ -63,7 +63,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_DEPT_GET)
+//    @Around(value = POINTCUT_DEPT_GET)
     public Object cacheDeptGet(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Integer object = (Integer) joinPoint.getArgs()[0];
@@ -85,7 +85,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_DEPT_UPDATE)
+//    @Around(value = POINTCUT_DEPT_UPDATE)
     public Object cacheDeptUpdate(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Dept deptVo = (Dept) joinPoint.getArgs()[0];
@@ -107,7 +107,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_DEPT_DELETE)
+//    @Around(value = POINTCUT_DEPT_DELETE)
     public Object cacheDeptDelete(ProceedingJoinPoint joinPoint) throws Throwable {
 
         //取出第一个参数
@@ -135,7 +135,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_USER_ADD)
+//    @Around(value = POINTCUT_USER_ADD)
     public Object cacheUserAdd(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         User object = (User) joinPoint.getArgs()[0];
@@ -151,7 +151,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_USER_GET)
+//    @Around(value = POINTCUT_USER_GET)
     public Object cacheUserGet(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         Integer object = (Integer) joinPoint.getArgs()[0];
@@ -173,7 +173,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_USER_UPDATE)
+//    @Around(value = POINTCUT_USER_UPDATE)
     public Object cacheUserUpdate(ProceedingJoinPoint joinPoint) throws Throwable {
         //取出第一个参数
         User userVo = (User) joinPoint.getArgs()[0];
@@ -195,7 +195,7 @@ public class CacheAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = POINTCUT_USER_DELETE)
+//    @Around(value = POINTCUT_USER_DELETE)
     public Object cacheUserDelete(ProceedingJoinPoint joinPoint) throws Throwable {
 
         //取出第一个参数

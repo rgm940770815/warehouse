@@ -63,6 +63,6 @@ shiro:
 
 #修改端口号为8088
 server:
-  port: 39235
+  port: 39346
 
 

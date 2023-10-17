@@ -69,16 +69,16 @@
         <div class="layui-inline">
             <label class="layui-form-label">供应商名称</label>
             <div class="layui-input-inline">
-                <select name="providerid" id="select_providerid">
-                    <option value="0">请选择供应商</option>
+                <select name="providerid" id="select_providerid" lay-search>
+                    <option value="">请选择供应商</option>
                 </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">商品名称</label>
             <div class="layui-input-inline">
-                <select name="goodsid" id="select_goodsid">
-                    <option value="0">请选择商品</option>
+                <select name="goodsid" id="select_goodsid" lay-search>
+                    <option value="">请选择商品</option>
                 </select>
             </div>
         </div>
@@ -209,7 +209,7 @@
         $.get("/provider/loadAllProviderForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_providerid");
-            var html = '<option value="0">请选择供应商</option>';
+            var html = '<option value="">请选择供应商</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.providername+'</option>';
             })
@@ -221,7 +221,7 @@
         $.get("/goods/loadAllGoodsForSelect",function (res) {
             var data = res.data;
             var dom = $("#select_goodsid");
-            var html = '<option value="0">请选择商品</option>';
+            var html = '<option value="">请选择商品</option>';
             $.each(data,function (index, item) {
                 html += '<option value="'+item.id+'">'+item.goodsname+'-['+item.size+']-'+'['+item.providername+']'+'</option>';
             });
