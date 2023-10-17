@@ -257,12 +257,16 @@
         };
 
         form.on("submit(doSubmit)",function(){
+            var btn =  $(this);
+            //设置按钮  为不可点击
+            btn.html('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>提交').attr("disabled","disabled").addClass("layui-disabled");
             //alert(url);
             //同步富文本和textarea里面的内容
             layedit.sync(editIndex);
             var data = $("#dataFrm").serialize();
             console.log("data",data);
             $.post(url,data,function (res) {
+                btn.html('<i class="layui-icon layui-icon-search layui-icon-normal "></i>提交').attr("disabled",false).removeClass("layui-disabled");
                 if (res.code==200){
                     tableIns.reload();
                 }

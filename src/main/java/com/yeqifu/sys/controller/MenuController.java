@@ -64,8 +64,7 @@ public class MenuController {
             //1.根据用户ID查询角色
             List<Integer> currentUserRoleIds = roleService.queryUserRoleIdsByUid(userId);
             //2.根据角色ID查询菜单ID和权限ID
-            //使用set去重
-            Set<Integer> pids = new HashSet<>();
+            List<Integer> pids = new ArrayList<>();
             for (Integer rid : currentUserRoleIds) {
                 //根据角色ID查询菜单ID和权限ID
                 List<Integer> permissionIds = roleService.queryRolePermissionIdsByRid(rid);

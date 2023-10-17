@@ -260,7 +260,11 @@
         }
 
         form.on("submit(doSubmit)",function (data) {
+            var btn =  $(this);
+            //设置按钮  为不可点击
+            btn.html('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>提交').attr("disabled","disabled").addClass("layui-disabled");
             $.post(url,data.field,function (res) {
+                btn.html('<i class="layui-icon layui-icon-search layui-icon-normal "></i>提交').attr("disabled",false).removeClass("layui-disabled");
                 if (res.code==200){
                     tableIns.reload();
                 }
